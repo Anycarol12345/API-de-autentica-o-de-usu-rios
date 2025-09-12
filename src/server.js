@@ -1,10 +1,10 @@
 const app = require('./app');
 const sequelize = require('src/Infrastructure/Persistence/Sequelize/database');
 const UserModel = require('src/Infrastructure/Persistence/Sequelize/models/UserModel');
-const { connectRedis} = require('src/Infrastructure/Persistence/Redis/redisClient');
+const { connectRedis } = require('src/Infrastructure/Persistence/Redis/RedisClient');
 const config = require('./config/index');
 
-const PORT = config.server.port;
+const PORT = config.serve.port;
 
 async function startServer() {
     try {
@@ -17,7 +17,7 @@ async function startServer() {
 
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}`);
-            console.log('Access API at http://localhost:${PORT}');
+            console.log(`Access API at http://localhost:${PORT}`);
         });
     }   catch (error) {
         console.error('Unable to start the server:', error);

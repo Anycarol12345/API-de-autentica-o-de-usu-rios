@@ -26,17 +26,25 @@ const userRepository = new SequelizeUserRepository(db);
 const tokenBlacklistRepository = new RedisTokenBlacklistRepository();
 const jwtProvider = new JWTProvider();
 
-const registerUserUseCase = new RegisterUser(userRepository);
+app.locals.tokenBlacklistRepository = tokenBlacklistRepository;
+
+const registerUserUseCase = new RegisterUser(userRepository, jwtProvider);
 const loginUserUseCase = new LoginUser(userRepository, jwtProvider);
+const logoutUserUseCase = new LogoutUser(tokenBlacklistRepository, jwtProvider);
 
-app.use('/auth', authRoutes(registerUserUseCase, loginUserUseCase));
+app.use('/auth', authRoutes(registerUserUseCase, loginUserUseCase, logoutUserUseCase));
 
-try{
-    const swaggerDocument = yaml.load(fs.readFileSync('./src/docs/api.yaml', 'utf8'));
-    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
-} catch (e) {
-    console.error('Failed to load API swagger.yml file:', e);
+const swaggerPath = path.join(__dirname, 'docs', 'swagger.yml');
+if (fs.existsSync(swaggerPath)) {
+    try {
+        const swaggerDocument = yaml.load(fs.readFileSync(swaggerPath, 'utf8'));
+        app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+        console.log('Swagger documentation loaded successfully');
+    } catch (e) {
+        console.error('Failed to load API swagger.yml file:', e);
+    }
+} else {
+    console.warn('Swagger file not found at:', swaggerPath);
 }
 
 app.use(errorHandler);

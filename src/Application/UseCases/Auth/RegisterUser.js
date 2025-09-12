@@ -11,7 +11,7 @@ class RegisterUser {
         const existingUser = await this.userRepository.findByEmail(input.email);
         
         if (existingUser){
-            throw new UserAlreadyExistsException('User with this email alredy exists.');
+            throw new UserAlreadyExistsException('User with this email already exists.');
         }
 
         const user = new User(input.name, input.email, input.password);
