@@ -18,6 +18,7 @@ async function startServer() {
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}`);
             console.log(`Access API at http://localhost:${PORT}`);
+
         });
     }   catch (error) {
         console.error('Unable to start the server:', error);
