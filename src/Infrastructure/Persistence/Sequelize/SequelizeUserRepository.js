@@ -1,6 +1,6 @@
 // src/Infrastructure/Persistence/Sequelize/index.js
 const { Sequelize } = require('sequelize');
-const UserModel = require('./models/User');
+const UserModel = require('./models/UserModel');
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: 'postgres',
