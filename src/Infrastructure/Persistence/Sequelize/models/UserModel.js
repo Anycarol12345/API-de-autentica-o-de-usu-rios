@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../database');
+const sequelize = require('../database'); // seu objeto Sequelize já configurado
 
-const UserModel = sequelize.define('User', {
+const User = sequelize.define('User', {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
@@ -25,4 +25,4 @@ const UserModel = sequelize.define('User', {
     timestamps: true,
 });
 
-module.exports = UserModel;
+module.exports = User;

@@ -30,3 +30,5 @@ class LoginUser {
     }
 
 }
+
+module.exports = LoginUser;

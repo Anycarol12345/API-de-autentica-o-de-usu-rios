@@ -2,12 +2,13 @@ const RegisterUserInput = require('src/Application/DTOs/RegisterUserInput');
 const LoginUserInput = require('src/Application/DTOs/LoginUserInput');
 
 class AuthController {
-    constructor(registerUserUseCase, loginUserUseCase){
+    constructor(registerUserUseCase, loginUserUseCase, logoutUserUseCase){
         this.registerUserUseCase = registerUserUseCase;
         this.loginUserUseCase = loginUserUseCase;
+        this.logoutUserUseCase = logoutUserUseCase;
     }
 
-    async register(req, res, nect){
+    async register(req, res, next){
         try {
             const { name, email, password } = req.body;
             const input = new RegisterUserInput(name, email, password);
@@ -31,9 +32,9 @@ class AuthController {
 
     async logout(req, res, next){
         try {
-            const token = req.headrs.authorization.split('')[1];
+            const token = req.headers.authorization.split(' ')[1];
             await this.logoutUserUseCase.execute(token);
-            return res.status(200).json({ massage: 'Logged out successfully.' });
+            return res.status(200).json({ message: 'Logged out successfully.' });
         } catch (error){
             next(error);
         }

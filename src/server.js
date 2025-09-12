@@ -1,7 +1,7 @@
 const app = require('./app');
-const sequelize = require('src/Insfracture/Persistence/Sequelize/database');
-const UserModel = require('src/Insfracture/Persistence/Sequelize/models/UserModel');
-const { connectRedis} = require('src/Insfracture/Persistence/Redis/redisClient');
+const sequelize = require('src/Infrastructure/Persistence/Sequelize/database');
+const UserModel = require('src/Infrastructure/Persistence/Sequelize/models/UserModel');
+const { connectRedis} = require('src/Infrastructure/Persistence/Redis/redisClient');
 const config = require('./config/index');
 
 const PORT = config.server.port;

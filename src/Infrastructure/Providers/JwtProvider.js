@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const config = require('src/config');
+const config = require('../../config');
 
 class JWTProvider {
     generateToken(payload){

@@ -5,12 +5,13 @@ const swaggerUi = require('swagger-ui-express');
 const yaml = require('yamljs');
 require('module-alias/register');
 const fs = require('fs');
+const db = require('./Infrastructure/Persistence/Sequelize');
 
-const errorHandler = require('./Insfracture/Express/middlewares/errorHandler');
-const SequelizeUserRepository = require('./Insfracture/Persistence/Sequelize/SequelizeUserRepository');
-const RedisTokenBlacklistRepository = require('./Insfracture/Persistence/Redis/RedisTokenBlacklistRepository');
-const JWTProvider = require('./Insfracture/Providers/JWTProvider');
-const authRoutes = require('.Infrastructure/Express/routes/auth.routes');
+const errorHandler = require('./Infrastructure/Express/middlewares/errorHandler');
+const SequelizeUserRepository = require('./Infrastructure/Persistence/Sequelize/SequelizeUserRepository');
+const RedisTokenBlacklistRepository = require('./Infrastructure/Persistence/Redis/RedisTokenBlacklistRepository');
+const JWTProvider = require('./Infrastructure/Providers/JWTProvider');
+const authRoutes = require('./Infrastructure/Express/routes/routes');
 
 const RegisterUser = require('./Application/UseCases/Auth/RegisterUser');
 const LoginUser = require('./Application/UseCases/Auth/LoginUser');
@@ -21,7 +22,7 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan('dev'));
 
-const userRepository = new SequelizeUserRepository();
+const userRepository = new SequelizeUserRepository(db);
 const tokenBlacklistRepository = new RedisTokenBlacklistRepository();
 const jwtProvider = new JWTProvider();
 

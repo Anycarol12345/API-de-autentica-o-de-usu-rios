@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const AuthController = require('src/Infrastruture/Express/controllers/AuthController');
+const AuthController = require('../controllers/AuthController');
 const validate = require('src/Infrastructure/Express/middlewares/validationMiddleware');
 const { registerSchema, loginSchema} = require('src/Infrastructure/Express/validationSchemas/authSchemas');
 
@@ -8,7 +8,8 @@ module.exports = (registerUserCase, loginUserUseCase) => {
     const authController = new AuthController(registerUserCase, loginUserUseCase);
 
     router.post('/register', validate(registerSchema), authController.register.bind(authController));
-    router.post('/login', validare(loginSchema), authController.login.bind(authController));
+    router.post('/login', validate(loginSchema), authController.login.bind(authController));
+
 
     return router;
 }

@@ -1,5 +1,5 @@
 const User = require('src/Domain/User/User');
-const UserOutput = require('src/Applications/DTOs/UserOutput');
+const UserOutput = require('src/Application/DTOs/UserOutput');
 const UserAlreadyExistsException = require('src/Domain/Exceptions/UserAlreadyExistsException');
 
 class RegisterUser {
@@ -21,3 +21,5 @@ class RegisterUser {
         return new UserOutput(user);
     }
 }
+
+module.exports = RegisterUser;
