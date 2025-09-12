@@ -1,15 +1,20 @@
-class SequelizeUserRepository {
-    constructor(db) {
-        this.db = db;
-    }
+// src/Infrastructure/Persistence/Sequelize/index.js
+const { Sequelize } = require('sequelize');
+const UserModel = require('./models/User');
 
-    async findByEmail(email) {
-        return this.db.User.findOne({ where: { email } });
-    }
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+  dialect: 'postgres',
+  logging: false,
+});
 
-    async create(userData) {
-        return this.db.User.create(userData);
-    }
-}
+// Inicializa o model User
+const User = UserModel(sequelize);
 
-module.exports = SequelizeUserRepository;
+// Exporta db com User incluso
+const db = {
+  sequelize,
+  Sequelize,
+  User, // <- aqui é importante
+};
+
+module.exports = db;
